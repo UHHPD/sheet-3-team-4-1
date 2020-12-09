@@ -41,6 +41,10 @@ int main() {
   
   double delta [601]; 
   
+
+  // Task 2a: 
+  cout << "Likelihood: " << likelihood(daten, 3.11538) << endl; 
+
   
   for(double mu = 0.0 ; mu <= 6; mu= mu+0.01)
   {
@@ -53,7 +57,7 @@ int main() {
   double mu = 0; 
   double estimator[601];
   
-  for(int i = 0; i <= 601; i++)
+  for(int i = 0; i < 601; i++)
   {
     estimator[i] = mu;
     delta[i] = -2*log(likelihood(daten, mu)) + 2*log(likelihood(daten, 3.11358));
@@ -68,7 +72,7 @@ int main() {
   // Find minimum: 
   double min = 10; 
   
-  for(int i = 0; i <= 601; i++)
+  for(int i = 0; i < 601; i++)
   {
 
 
@@ -105,23 +109,29 @@ int main() {
   // Comparison with sample mean: 
   cout << "Uncertainty on the sample mean: " << standard_dev_datensumme/sqrt(234) << endl;
 
-  // Compute likelihood ratio and relative deviation of likelihood ratio from the mean//
-  double ratio = likelihood(daten, mu); 
   // "reset" mu: 
   mu = 3.11538; 
+  // Compute likelihood ratio and relative deviation of likelihood ratio from the mean//
+  double ratio = likelihood(daten, mu); 
+  double denominator = 1;
 
   cout << "mu: " << mu << endl; 
   
   for(int i = 0; i < 234; i++)
   {
-    ratio /=  poisson(daten[i], daten[i]);
+    denominator *=  poisson(daten[i], daten[i]);
   }  
+
+  ratio = ratio/denominator; 
 
   // Print out ratio: 
   cout << "ratio: " << ratio << endl; 
+  
 
   // relative deviation, ndof: number of degress of freedom, parameter of \chi^2 distribution
   static int ndof = 233; 
+
+  cout << "-2*ln(lambda): " << -2*log(ratio) << endl; 
 
   double deviation =  (-2*log(ratio) - ndof )/( sqrt(2*ndof) );
 
