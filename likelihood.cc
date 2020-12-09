@@ -53,7 +53,7 @@ int main() {
   double mu = 0; 
   double estimator[601];
   
-  for(int i = 0; i < 601; i++)
+  for(int i = 0; i <= 601; i++)
   {
     estimator[i] = mu;
     delta[i] = -2*log(likelihood(daten, mu)) + 2*log(likelihood(daten, 3.11358));
@@ -68,13 +68,15 @@ int main() {
   // Find minimum: 
   double min = 10; 
   
-
-  for(int i = 0; i < 601; i++)
+  for(int i = 0; i <= 601; i++)
   {
+
+
     if(delta[i] < min)
     {
       min = delta[i];
       arg_min = i; 
+
     }
   }
   // cout << "argmin: " << arg_min << endl; 
@@ -94,7 +96,7 @@ int main() {
      interval.push_back(estimator[i]); 
     }
   }
-   
+
   // l.back(): Get last item of list. 
   cout << "Uncertainty on estimator: " << interval.back() - estimator[arg_min] << endl;
   
